@@ -13,7 +13,7 @@ install_osquery() {
 
 	# Downloading osquery
 	echo -e "\e[33mDownloading osquery\e[0m"
-	sudo curl -o /usr/bin/osqueryd https://raw.githubusercontent.com/VajraSecurity/Osquery-Hands-on/main/linux/osqueryd
+	sudo curl -o /usr/bin/osqueryd https://media.githubusercontent.com/media/VajraSecurity/Osquery-Hands-on/main/linux/osqueryd
 
 	# Osquery execute permission
 	echo -e "\e[33mOsquery execute permission\e[0m"
