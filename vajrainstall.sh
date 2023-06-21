@@ -86,19 +86,23 @@ uninstall_osquery() {
 	echo -e "\e[32mVajra EDR Client uninstallation successfull\e[0m"
 }
 
-if [ $# -eq 0 ] || [ $# -eq 1 ]; then
+	start_time=$(date +%s.%N)
+	if [ $# -eq 0 ] || [ $# -eq 1 ]; then
 
-	if [ "$1" = "-install" ] || [ "$1" = "" ]; then
-		install_osquery
-	elif [ "$1" = "-uninstall" ]; then
-		uninstall_osquery
+		if [ "$1" = "-install" ] || [ "$1" = "" ]; then
+			install_osquery
+		elif [ "$1" = "-uninstall" ]; then
+			uninstall_osquery
+		else
+			echo -e "\e[31mInvalid argument: $1\e[0m"
+			echo -e "\e[31mUsage: $0 [-install | -uninstall]\e[0m"
+			echo -e "\e[32mIf no option is selected, by default the script will install osquery \e[0m"
+			echo -e "\e[31mVajra EDR Client installation failed\e[0m"
+			exit 1
+		fi
 	else
-		echo -e "\e[31mInvalid argument: $1\e[0m"
-		echo -e "\e[31mUsage: $0 [-install | -uninstall]\e[0m"
-		echo -e "\e[32mIf no option is selected, by default the script will install osquery \e[0m"
-		echo -e "\e[31mVajra EDR Client installation failed\e[0m"
-		exit 1
+		echo -e "\e[32mMultiple arguments provided.\e[0m"
 	fi
-else
-    echo -e "\e[32mMultiple arguments provided.\e[0m"
-fi
+    end_time=$(date +%s.%N)
+	elapsed_time=$(echo "$end_time - $start_time" | bc)
+	echo "Operation took: $elapsed_time seconds"
