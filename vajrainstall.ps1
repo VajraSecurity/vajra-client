@@ -11,12 +11,9 @@ $scriptVersion = '1.0.0.0'
 $extnDownloadUrl = 'https://github.com/eclecticiq/osq-ext-bin/raw/master/plgx_win_extension.ext.exe'
 $osquerydDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osqueryd.exe'
 $osqueryConfDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery.conf'
-# $osqueryEvtloggerFlagsDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery_evtlogger.flags'
-# $osqueryFsloggerFlagsDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery_fslogger.flags'
 $osqueryEnrollmentSecretDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/enrollment_secret.txt'
 $osqueryCertDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/certs/cert.pem'
-$osqueryEvtloggerFlagsDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery.flags'
-$osqueryFsloggerFlagsDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery.flags'
+$osqueryFlagsDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery.flags'
 $osqueryManifestDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery.man'
 $extnLoadDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/extensions.load'
 
@@ -36,8 +33,7 @@ $osqueryPack10Url = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/
 $ExtnFilename = 'plgx_win_extension.ext.exe'
 $OsquerydFilename = 'osqueryd.exe'
 $OsqueryConfFilename = 'osquery.conf'
-$OsqueryEvtloggerFlagsFilename = 'osquery_evtlogger.flags'
-$OsqueryFsloggerFlagsFilename = 'osquery_fslogger.flags'
+$OsqueryFlagsFilename = 'osquery.flags'
 $OsqueryExtnLoadFilename = 'extensions.load'
 $OsqueryCertFilename = 'cert.pem'
 $OsqueryEnrollmentSecretFilename = 'enrollment_secret.txt'
@@ -91,8 +87,7 @@ function DownloadFiles {
 	DownloadFileFromUrl $extnDownloadUrl $ExtnFilename
 	DownloadFileFromUrl $osquerydDownloadUrl $OsquerydFilename
 	DownloadFileFromUrl $osqueryConfDownloadUrl $OsqueryConfFilename
-	DownloadFileFromUrl $osqueryEvtloggerFlagsDownloadUrl $OsqueryEvtloggerFlagsFilename
-	DownloadFileFromUrl $osqueryFsloggerFlagsDownloadUrl $OsqueryFsloggerFlagsFilename
+	DownloadFileFromUrl $osqueryFlagsDownloadUrl $OsqueryFlagsFilename
 	DownloadFileFromUrl $osqueryManifestDownloadUrl $OsqueryManifestFilename
 	DownloadFileFromUrl $extnLoadDownloadUrl $OsqueryExtnLoadFilename
 	DownloadFileFromUrl $osqueryCertDownloadUrl $OsqueryCertFilename
@@ -196,16 +191,17 @@ function CopyFilesToInstalldir {
 	CopyFile "$pwd\$OsqueryConfFilename" "${Env:ProgramFiles}\osquery\$OsqueryConfFilename"
 	CopyFile "$pwd\$OsqueryCertFilename" "${Env:ProgramFiles}\osquery\certs\$OsqueryCertFilename"
 	CopyFile "$pwd\$OsqueryEnrollmentSecretFilename" "${Env:ProgramFiles}\osquery\$OsqueryEnrollmentSecretFilename"
-	
+	CopyFile "$pwd\$OsqueryFlagsFilename" "${Env:ProgramFiles}\osquery\osquery.flags"
+
 	#check what logger option was chosen for install then copy flags file accordingly
-	if($windows_event_log){
-		CopyFile "$pwd\$OsqueryEvtloggerFlagsFilename" "${Env:ProgramFiles}\osquery\osquery.flags"
-	} elseif($filesystem) {
-		CopyFile "$pwd\$OsqueryFsloggerFlagsFilename" "${Env:ProgramFiles}\osquery\osquery.flags"
-	} else {
-		Write-Host -ForegroundColor RED '[-] We should not reach here. Script will abort the installation now!!'
-        Exit -1
-	}	
+	# if($windows_event_log){
+	# 	CopyFile "$pwd\$OsqueryEvtloggerFlagsFilename" "${Env:ProgramFiles}\osquery\osquery.flags"
+	# } elseif($filesystem) {
+	# 	CopyFile "$pwd\$OsqueryFsloggerFlagsFilename" "${Env:ProgramFiles}\osquery\osquery.flags"
+	# } else {
+	# 	Write-Host -ForegroundColor RED '[-] We should not reach here. Script will abort the installation now!!'
+    #     Exit -1
+	# }	
 	
 	CopyFile "$pwd\$OsqueryManifestFilename" "${Env:ProgramFiles}\osquery\$OsqueryManifestFilename"	
 	CopyFile "$pwd\$OsqueryExtnLoadFilename" "${Env:ProgramFiles}\osquery\$OsqueryExtnLoadFilename"	
@@ -243,8 +239,8 @@ function CleanupDownloadedFiles {
 	Remove-Item "$pwd\$ExtnFilename"
 	Remove-Item "$pwd\$OsquerydFilename"
 	Remove-Item "$pwd\$OsqueryConfFilename"
-	Remove-Item "$pwd\$OsqueryEvtloggerFlagsFilename"
-	Remove-Item "$pwd\$OsqueryFsloggerFlagsFilename"
+	# Remove-Item "$pwd\$OsqueryEvtloggerFlagsFilename"
+	Remove-Item "$pwd\$OsqueryFlagsFilename"
 	Remove-Item "$pwd\$OsqueryManifestFilename"	
 	Remove-Item "$pwd\$OsqueryExtnLoadFilename"	
 	Remove-Item "$pwd\$OsqueryCertFilename"	
@@ -259,6 +255,23 @@ function CleanupDownloadedFiles {
 	Remove-Item "$pwd\$OsqueryPackFile8"
 	Remove-Item "$pwd\$OsqueryPackFile9"
 	Remove-Item "$pwd\$OsqueryPackFile10"
+}
+
+function SetVariables {
+	$ipPattern = "^(\d{1,3}\.){3}\d{1,3}$"
+	$domainPattern = "^(?=.{1,253}\.?$)(?:(?!-|[^.]+_)[A-Za-z0-9-_]{1,63}(?<!-)\.?)+$"
+	$tls_hostname = Read-Host -Prompt "Enter your Server's domain name/IP:"
+
+	# Check the input and prompt again if invalid
+	while ([string]::IsNullOrEmpty($tls_hostname) -or ($tls_hostname -notmatch $ipPattern -and $tls_hostname -notmatch $domainPattern)) {
+		Write-Host "Invalid input. Please enter a valid IP or domain."
+		$tls_hostname = Read-Host -Prompt "Enter an IP or domain:"
+	}
+
+	$tls_hostname += ":1234"
+	$flagsContent = Get-Content -Path $OsqueryFlagsFilename
+	$newFlagsContent = $flagsContent -replace "--tls_hostname=.*", "--tls_hostname=$tls_hostname"
+	$newFlagsContent | Set-Content -Path $OsqueryFlagsFilename
 }
 
 function StopPlgxServices {
@@ -399,6 +412,8 @@ function Main {
 		# Download all files
 		DownloadFiles
 		
+		SetVariables
+
 		# Copy files to install location
 		CopyFilesToInstalldir
 
@@ -406,6 +421,7 @@ function Main {
 		
 		CleanupDownloadedFiles
 		
+
 		Write-Host -ForegroundColor Yellow "========================================================================"
 	}
 }
