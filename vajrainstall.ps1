@@ -8,7 +8,7 @@ param(
 
 # Globals
 $scriptVersion = '1.0.0.0'
-$extnDownloadUrl = 'https://github.com/eclecticiq/osq-ext-bin/raw/master/plgx_win_extension.ext.exe'
+$extnDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/plgx_win_extension.ext.exe'
 $osquerydDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osqueryd.exe'
 $osqueryConfDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/osquery.conf'
 $osqueryEnrollmentSecretDownloadUrl = 'https://github.com/VajraSecurity/Osquery-Hands-on/raw/main/Osquery/enrollment_secret.txt'
