@@ -412,16 +412,19 @@ function Main {
 		# Download all files
 		DownloadFiles
 		
+		# Set server domain or IP
 		SetVariables
 
 		# Copy files to install location
 		CopyFilesToInstalldir
 
+		# Start Osquery service
 		StartOsqueryService
 		
+		# Cleanup downloaded files
 		CleanupDownloadedFiles
 		
-
+		# Completed
 		Write-Host -ForegroundColor Yellow "========================================================================"
 	}
 }
