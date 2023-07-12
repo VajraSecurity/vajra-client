@@ -8,6 +8,7 @@ To install agent follow below steps
 3.1 For offline installation "powershell.exe -executionpolicy bypass .\vajrainstall.ps1 -offline"
 
 3.2 For online installation "powershell.exe -executionpolicy bypass .\vajrainstall.ps1"
+
 4. For uninstallation "powershell.exe -executionpolicy bypass .\vajrainstall.ps1 -uninstall"
 
 **For Linux**
