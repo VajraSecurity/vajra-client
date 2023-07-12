@@ -1,4 +1,6 @@
 To install agent follow below steps 
+
+
 **For Windows**
 1. Download the vajra-client folder
 2. cd windows
