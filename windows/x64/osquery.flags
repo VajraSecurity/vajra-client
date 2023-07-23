@@ -23,7 +23,7 @@
 --extensions_require=plgx_win_extension
 --enroll_secret_path=C:\Program Files\osquery\enrollment_secret.txt
 --tls_server_certs=C:\Program Files\osquery\certs\cert.pem
---tls_hostname=s3.ieor.iitb.ac.in:1234
+--tls_hostname=getvajra.com:1234
 --host_identifier=uuid
 --disable_distributed=false
 --distributed_plugin=tls
