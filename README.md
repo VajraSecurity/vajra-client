@@ -1,7 +1,7 @@
 # Vajra EDR Tool
 ![Image](https://getvajra.com/static/media/vajralogo.b2efeacf3b8d1ac36fd5a25bc9ea1e21.svg)
 
-Vajra EDR is the client installation repository
+vajra-client is the Vajra EDR client installation repository
 
 ## About
 
@@ -91,6 +91,12 @@ Please make sure to update tests as appropriate.
 To see your systems protection status visit [Vajra](https://getvajra.com/).
 
 For queries write us on [support](mailto:sablearjun@iitb.ac.in)
+
+## Publications
+
+[A. Sable, D. Sawant, S. Kahalekar and M. K. Hanawal, "Threat Detection and Response in Linux Endpoints," 2022 14th International Conference on COMmunication Systems & NETworkS (COMSNETS), Bangalore, India, 2022, pp. 447-449, doi: 10.1109/COMSNETS53615.2022.9668567.](https://ieeexplore.ieee.org/document/9668567)
+
+[Y. C. Jadhav, A. Sable, M. Suresh and M. K. Hanawal, "Securing Containers: Honeypots for Analysing Container Attacks," 2023 15th International Conference on COMmunication Systems & NETworkS (COMSNETS), Bangalore, India, 2023, pp. 225-227, doi: 10.1109/COMSNETS56262.2023.10041276.](https://ieeexplore.ieee.org/abstract/document/10041276)
 
 ---
 **Readme file for:** Vajra EDR Tool

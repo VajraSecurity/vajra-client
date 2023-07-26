@@ -15,7 +15,7 @@ set welManifestPath="%ProgramFiles%\osquery\osquery.man"
 set startupArgs=--flagfile="%ProgramFiles%\osquery\osquery.flags"
 if exist "%LogFile%" del "%LogFile%"
 
-echo [+] Installing Vajra EDR client version %scriptVersion% on your system, an indegenously developed endpoint security system at IIT Bombay (an institute of national importance).
+echo [+] Installing Vajra EDR client version %scriptVersion% on your system, an indegenously developed endpoint security system at Indian Institute of Technology, Bombay (an institute of national importance).
 call :LogError INFO: Vajra EDR client installation script version %scriptVersion%
 @REM ------------------------------------- Part 1 : Testing the system compatibility -------------------------------------
 
@@ -26,6 +26,7 @@ echo [+] Verifying that script is running with Admin privileges.
     net session >nul 2>&1 
     if %errorLevel% == 0 (
         echo [+] SUCCESS: Script running with Admin privileges!
+        call :LogError SUCCESS: Script running with Admin privileges!
     ) else (
         echo [-] ERROR: Please run this script with Admin privileges! Right click on Filename and Run as Administrator.%reset%
         call :LogError ERROR: Script running without Admin privileges!
@@ -60,13 +61,13 @@ if not "%windows_version%" == "7" if not "%windows_version%" == "8" if not "%win
     echo [-] Vajra EDR client does not support current Windows version.
     echo [-] Vajra EDR client currently supports Windows 7, Windows 8, Windows 8.1, Windows 10 and Windows 11.
     echo [-] Aborting the installation process.
+    call :LogError ERROR: Vajra client does not support %windows_version% and %architecture% bits
     pause
     exit /b 1
 ) else (
     echo [+] Vajra EDR client supports the current Windows version %windows_version% and %architecture% bits.
     echo [+] Continuing the installation process.
 )
-
 
 GOTO :CheckVajraService
 @REM Function to cleanup in case of installation failure
@@ -77,13 +78,17 @@ GOTO :CheckVajraService
     sc stop %kServiceName% >nul 2>> "%LogFile%"
     rmdir /s /q "%ProgramFiles%\osquery" >nul 2>> "%LogFile%"
     if %errorlevel% equ 0 (
-        echo [+] Cleared all the installation directory !
+        echo [+] Cleared Osquery installation directory !
     ) else (
         echo [-] Failed to clear all the installation directory !
     )
     
     rmdir /s /q "%ProgramFiles%\plgx_osquery\" >nul 2>> "%LogFile%"
-
+    if %errorlevel% equ 0 (
+        echo [+] Cleared Osquery extension installation directory !
+    ) else (
+        echo [-] Failed to clear all the installation directory !
+    )
     @REM Remove service
     echo [+] Removing Vajra EDR client service
 
@@ -107,6 +112,7 @@ GOTO :CheckVajraService
         exit /b 1
     ) else (
         echo [+] The Vajra EDR service is not running. Proceeding with the installation...
+        call :LogError SUCCESS: The Vajra service is does not exist
     )
 
 
