@@ -219,8 +219,8 @@ for %%F in (%OsqueryEnrollmentSecretFilename% %OsqueryCertFilename%) do (
 )
 
 @REM Copying osqueryd executable file 
-echo [+] Copying file from : %SourceFolder%x%architecture%\%OsquerydFilename% to : %OsquerydFolderName%\%OsquerydFilename%"
-copy /Y "%SourceFolder%x%architecture%\%OsquerydFilename%" "%OsquerydFolderName%\%OsquerydFilename%" >nul 2>> "%LogFile%"
+echo [+] Copying file from : %SourceFolder%%ArchSubfolder%\%OsquerydFilename% to : %OsquerydFolderName%\%OsquerydFilename%"
+copy /Y "%SourceFolder%%ArchSubfolder%\%OsquerydFilename%" "%OsquerydFolderName%\%OsquerydFilename%" >nul 2>> "%LogFile%"
 
 @REM Copying SSL certificate file
 echo [+] Copying file from : %SourceFolder%common\%OsqueryCertFilename% to : %CertFolderName%\%OsqueryCertFilename%"
