@@ -25,10 +25,10 @@ echo [+] Verifying that script is running with Admin privileges.
 :check_Permissions    
     net session >nul 2>&1 
     if %errorLevel% == 0 (
-        echo [+] SUCCESS: Script running with Admin privileges!
+        echo [+] SUCCESS: Script running with Admin privileges! Proceeding with the installation.
         call :LogError SUCCESS: Script running with Admin privileges!
     ) else (
-        echo [-] ERROR: Please run this script with Admin privileges! Right click on Filename and Run as Administrator.%reset%
+        echo [-] ERROR: Please run this script with Admin privileges! Right click on Filename and Run as Administrator.
         call :LogError ERROR: Script running without Admin privileges!
         pause
         exit /b 1
@@ -128,32 +128,6 @@ set OsqueryCertFilename=cert.pem
 set OsqueryEnrollmentSecretFilename=enrollment_secret.txt
 set OsqueryManifestFilename=osquery.man
 
-@REM Set filenames
-@REM set VcFilePath=%~dp0x86\vc_redist.x86.exe
-@REM set filename = "x86\vc_redist.x86.exe"
-@REM echo VC Location is : %VcFilePath%
-@REM         if exist "%VcFilePath%" (
-@REM             set "Arguments=/install /passive /norestart"
-@REM             echo %VcFilePath% %Arguments%
-@REM             start %VcFilePath% /install /passive /norestart
-@REM         ) else (
-@REM             echo [-] Failed to find %VcFilePath% for installation, Please Check Manually that VC Redistributables are installed
-@REM             pause
-@REM         )
-
-@REM set vcredistFileName=vc_redist.x86.exe
-@REM set boostDllFileName=boost_context-vc140-mt-x32-1_66.dll
-@REM set OsqueryPackFile1=hardware-monitoring.conf
-@REM set OsqueryPackFile2=incident-response.conf
-@REM set OsqueryPackFile3=it-compliance.conf
-@REM set OsqueryPackFile4=osquery-monitoring.conf
-@REM set OsqueryPackFile5=ossec-rootkit.conf
-@REM set OsqueryPackFile6=osx-attacks.conf
-@REM set OsqueryPackFile7=unwanted-chrome-extensions.conf
-@REM set OsqueryPackFile8=vuln-management.conf
-@REM set OsqueryPackFile9=windows-attacks.conf
-@REM set OsqueryPackFile10=windows-hardening.conf
-
 echo [+] Creating installation directories 
 
 @REM Create necessary directories
@@ -162,32 +136,6 @@ mkdir "%ProgramFiles%\osquery\osqueryd" >nul 2>> "%LogFile%"
 mkdir "%ProgramFiles%\osquery\packs" >nul 2>> "%LogFile%"
 mkdir "%ProgramFiles%\osquery\log" >nul 2>> "%LogFile%"
 mkdir "%ProgramFiles%\osquery\certs" >nul 2>> "%LogFile%"
-
-
-REM Copy files
-@REM if "%bits32%"=="false" (
-@REM     copy /Y "%~dp0x64\%OsqueryFlagsFilename%" "%ProgramFiles%\osquery\osquery.flags"
-@REM     copy /Y "%~dp0%ExtnFilename%" "%ProgramFiles%\osquery\%ExtnFilename%"
-@REM     copy /Y "%~dp0%OsqueryManifestFilename%" "%ProgramFiles%\osquery\%OsqueryManifestFilename%"
-@REM     copy /Y "%~dp0%OsqueryExtnLoadFilename%" "%ProgramFiles%\osquery\%OsqueryExtnLoadFilename%"
-@REM )
-@REM else (
-@REM     copy /Y "%~dp0x86\%OsqueryFlagsFilename%" "%ProgramFiles%\osquery\osquery.flags"
-@REM )
-@REM copy /Y "%~dp0%OsquerydFilename%" "%ProgramFiles%\osquery\osqueryd\osqueryd.exe"
-@REM copy /Y "%~dp0%OsqueryConfFilename%" "%ProgramFiles%\osquery\%OsqueryConfFilename%"
-@REM copy /Y "%~dp0%OsqueryCertFilename%" "%ProgramFiles%\osquery\certs\%OsqueryCertFilename%"
-@REM copy /Y "%~dp0%OsqueryEnrollmentSecretFilename%" "%ProgramFiles%\osquery\%OsqueryEnrollmentSecretFilename%"
-@REM copy /Y "%~dp0%OsqueryPackFile1%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile1%"
-@REM copy /Y "%~dp0%OsqueryPackFile2%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile2%"
-@REM copy /Y "%~dp0%OsqueryPackFile3%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile3%"
-@REM copy /Y "%~dp0%OsqueryPackFile4%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile4%"
-@REM copy /Y "%~dp0%OsqueryPackFile5%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile5%"
-@REM copy /Y "%~dp0%OsqueryPackFile6%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile6%"
-@REM copy /Y "%~dp0%OsqueryPackFile7%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile7%"
-@REM copy /Y "%~dp0%OsqueryPackFile8%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile8%"
-@REM copy /Y "%~dp0%OsqueryPackFile9%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile9%"
-@REM copy /Y "%~dp0%OsqueryPackFile10%" "%ProgramFiles%\osquery\packs\%OsqueryPackFile10%"
 
 @REM Copying executables and other files in the installation directory
 echo [+] Copying executables and other files in the installation directory
