@@ -32,6 +32,9 @@ Step 2. Unzip the folder
 Step 3. Right click on Vajra_install.bat select "Run as Administrator"
 Step 4. Done
 ```
+#### Video tutorial [Youtube](https://youtu.be/Y5Ivx9VoSTk)
+https://github.com/VajraSecurity/vajra-client/assets/30570554/a7e5fab9-dbd5-4392-b5b4-667e68f7a0fc
+
 
 ### Linux
 ```python
@@ -52,6 +55,9 @@ Step 2. Unzip the folder
 Step 3. Right click on Vajra_uninstall.bat select "Run as Administrator"
 Step 4. Done
 ```
+#### Video tutorial [Youtube](https://youtu.be/DxR4lkSIXM4)
+https://github.com/VajraSecurity/vajra-client/assets/30570554/1d667f8c-8f2b-466e-b94e-4701b4b64396
+
 
 ### Linux
 ```python
