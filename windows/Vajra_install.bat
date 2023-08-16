@@ -7,6 +7,7 @@ REM Date: 2023-07-25
 set scriptVersion=1.0.0.1
 set "bits32=false"
 set "LogFile=vajra_install_log.txt"
+set "LockFile=install.lock"
 set kServiceName=vajra
 set kServiceDescription=Vajra EDR client service
 set kServiceDisplayName=vajra
@@ -14,10 +15,20 @@ set kServiceBinaryPath="%ProgramFiles%\osquery\osqueryd\osqueryd.exe"
 set welManifestPath="%ProgramFiles%\osquery\osquery.man"
 set startupArgs=--flagfile="%ProgramFiles%\osquery\osquery.flags"
 if exist "%LogFile%" del "%LogFile%"
-
+if exist "%LockFile%" del "%LockFile%"
 echo [+] Installing Vajra EDR client version %scriptVersion% on your system, an indegenously developed endpoint security system at Indian Institute of Technology, Bombay (an institute of national importance).
 call :LogError INFO: Vajra EDR client installation script version %scriptVersion%
 @REM ------------------------------------- Part 1 : Testing the system compatibility -------------------------------------
+REM Check if lock file exists
+
+if exist "%LockFile%" (
+    echo [-] Installation is already in progress. Please wait... %LockFile%
+    pause
+    exit /b
+)
+
+REM Create the lock file
+type nul > "%LockFile%"
 
 @REM Check Admin privileges
 echo [+] Verifying that script is running with Admin privileges.
@@ -30,6 +41,7 @@ echo [+] Verifying that script is running with Admin privileges.
     ) else (
         echo [-] ERROR: Please run this script with Admin privileges! Right click on Filename and Run as Administrator.
         call :LogError ERROR: Script running without Admin privileges!
+        call :removelock
         pause
         exit /b 1
     )
@@ -62,6 +74,7 @@ if not "%windows_version%" == "7" if not "%windows_version%" == "8" if not "%win
     echo [-] Vajra EDR client currently supports Windows 7, Windows 8, Windows 8.1, Windows 10 and Windows 11.
     echo [-] Aborting the installation process.
     call :LogError ERROR: Vajra client does not support %windows_version% and %architecture% bits
+    call :removelock
     pause
     exit /b 1
 ) else (
@@ -70,6 +83,12 @@ if not "%windows_version%" == "7" if not "%windows_version%" == "8" if not "%win
 )
 
 GOTO :CheckVajraService
+
+@REM 
+:removelock
+    del "%LockFile%"
+    goto :eof
+
 @REM Function to cleanup in case of installation failure
 :cleanup
     @REM Delete files
@@ -93,7 +112,7 @@ GOTO :CheckVajraService
     echo [+] Removing Vajra EDR client service
 
     sc delete %kServiceName% >nul 2>> "%LogFile%"
-
+    call :removelock
     echo [+] Cleanup completed
     goto :eof
 
@@ -108,6 +127,7 @@ GOTO :CheckVajraService
     if %errorlevel% equ 0 (
         echo [-] ERROR: The Vajra EDR service is already running. Exiting...
         call :LogError ERROR: The Vajra service is already running
+        call :removelock
         pause
         exit /b 1
     ) else (
@@ -181,7 +201,13 @@ echo [+] Creating Vajra EDR client service
 
 @REM Creating the service
 sc create %kServiceName% binPath= "\"C:\Program Files\osquery\osqueryd\osqueryd.exe\" \"--flagfile\" \"C:\Program Files\osquery\osquery.flags\" \"--allow_unsafe\"" start= auto DisplayName= %kServiceDisplayName% >nul 2>> "%LogFile%"
+if %errorlevel% equ 0 (
+    echo [+] Vajra EDR client service started successful !
+) else (
+    echo [-] Failed to start Vajra EDR service!
+    call :cleanup
 
+)
 @REM Starting the service
 sc start %kServiceName% >nul 2>> "%LogFile%"
 
@@ -191,7 +217,10 @@ REM Check if the service was created successfully
 if %errorlevel% equ 0 (
     echo [+] Vajra EDR client installation successful !
 ) else (
-    echo [+] Vajra EDR client installation failed !
+    echo [-] Vajra EDR client installation failed !
     call :cleanup
 )
+
+@REM Removing the Lock file
+del "%LockFile%"
 pause
