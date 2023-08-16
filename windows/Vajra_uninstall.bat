@@ -18,19 +18,27 @@ echo [+] Checking if Vajra EDR client is installed
 sc query %kServiceName% | findstr /C:"SERVICE_NAME: %kServiceName%" >nul
 if %errorlevel% neq 0 (
     echo [-] The Vajra EDR service does not exist
+    echo [-] The Vajra EDR service does not exist
+    echo [-] Exiting
     pause
     exit /b 1
 )
 
+echo [+] The Vajra EDR service exists. Proceeding to uninstall
 
 echo [+] Stopping the Vajra EDR service
+
 sc stop %kServiceName% >nul 2>> "%LogFile%"
+
+echo [+] Removing "%ProgramFiles%\osquery" files
+
 rmdir /s /q "%ProgramFiles%\osquery" >nul 2>> "%LogFile%"
 if %errorlevel% equ 0 (
     echo [+] Cleared all the installation directories
 ) else (
     echo [-] Failed to clear all the installation directories
 )
+echo [+] Removing "%ProgramFiles%\plgx_osquery\" files
 
 rmdir /s /q "%ProgramFiles%\plgx_osquery\" >nul 2>> "%LogFile%"
 
