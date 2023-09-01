@@ -84,7 +84,7 @@ Step 6. Done
 ### Node status is offline
 1. 'sudo systemctl status vajra.service' It should be in running mode
 2. Check client`s network connectivity with server
-3. After clooning the repository run 'git lfs install' and then 'git lfs pull'
+3. After cloning the repository run 'git lfs install' and then 'git lfs pull'
 ```
 ## Contributing
 
