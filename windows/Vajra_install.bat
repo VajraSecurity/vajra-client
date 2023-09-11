@@ -86,7 +86,11 @@ GOTO :CheckVajraService
 
 @REM 
 :removelock
-    del "%LockFile%"
+    if exist "%LockFile%" (
+        del "%LockFile%"
+    ) else (
+        echo [-] File does not exist.
+    )
     goto :eof
 
 @REM Function to cleanup in case of installation failure
