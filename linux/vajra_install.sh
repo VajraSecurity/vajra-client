@@ -101,6 +101,8 @@ copy_files() {
 	"common/vajra.service"
 	"common/vajra.service"
 	"common/vajra.sh"
+    "common/vajra_linux_extension.ext"
+    "common/extensions.load"
 	)
 
 	destinations=(
@@ -111,6 +113,8 @@ copy_files() {
 		"/lib/systemd/system/"
 		"/etc/systemd/system/"
 		"/usr/bin/"
+        "/etc/osquery/"
+        "/etc/osquery/"
 	)
     for ((i = 0; i < ${#sources[@]}; i++)); do
         source="${sources[$i]}"
@@ -140,6 +144,7 @@ copy_files() {
 set_permissions_to_binary() {
 	sudo chmod +x /usr/bin/osqueryd
 	sudo chmod +x /usr/bin/vajra.sh
+    sudo chmod +x /etc/osquery/vajra_linux_extension.ext
 	sudo chmod 644 /etc/systemd/system/vajra.service
 }
 
