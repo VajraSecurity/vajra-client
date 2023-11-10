@@ -1,7 +1,7 @@
 --disable_events=false
 --enroll_secret_path=/etc/osquery/enrollment_secret
 --tls_server_certs=/etc/osquery/cert.pem
---tls_hostname=10.119.31.12:1234
+--tls_hostname=getvajra.com:1234
 --enroll_tls_endpoint=/enroll
 --config_plugin=tls
 --config_tls_endpoint=/config
