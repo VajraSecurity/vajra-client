@@ -14,7 +14,7 @@ According to the fables in Indian mythologies, [Vajra](https://en.wikipedia.org/
 3. Windows 10
 4. Windows 11
 
-**Linux {Kernel version >=4.18}**
+**Linux**
 1. Ubuntu
 2. CentOS
 3. RHEL
