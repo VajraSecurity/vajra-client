@@ -11,6 +11,40 @@ set "LockFile=install.lock"
 set kServiceName=vajra
 set kServiceDescription=Vajra EDR client service
 set kServiceDisplayName=vajra
+
+GOTO :check_Permissions
+
+
+@REM Log error messages function
+:LogError
+    echo %* >> "%LogFile%"
+    exit /b
+
+@REM 
+:removelock
+    if exist "%LockFile%" (
+        del "%LockFile%"
+    ) else (
+        echo [-] Lock File does not exist.
+    )
+    goto :eof
+
+
+@REM Check Admin privileges
+echo [+] Verifying that script is running with Admin privileges.
+
+:check_Permissions    
+    net session >nul 2>&1 
+    if %errorLevel% == 0 (
+        echo [+] SUCCESS: Script running with Admin privileges! Proceeding with the uninstallation.
+        call :LogError SUCCESS: Script running with Admin privileges!
+    ) else (
+        echo [-] ERROR: Please run this script with Admin privileges! Right click on Filename and Run as Administrator.
+        call :LogError ERROR: Script running without Admin privileges!
+        pause
+        exit /b 1
+    )
+
 if exist "%LogFile%" del "%LogFile%"
 if exist "%LockFile%" del "%LockFile%"
 

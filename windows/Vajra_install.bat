@@ -89,7 +89,7 @@ GOTO :CheckVajraService
     if exist "%LockFile%" (
         del "%LockFile%"
     ) else (
-        echo [-] File does not exist.
+        echo [-] Lock File does not exist.
     )
     goto :eof
 
@@ -146,6 +146,7 @@ GOTO :CheckVajraService
 
 set OsquerydFilename=osqueryd.exe
 set ExtnFilename=plgx_win_extension.ext.exe
+set VajraExtnFilename=vajra_win_extension.ext.exe
 set OsqueryFlagsFilename=osquery.flags
 set OsqueryExtnLoadFilename=extensions.load
 set OsqueryCertFilename=cert.pem
@@ -172,11 +173,11 @@ set "OsquerydFolderName=%ProgramFiles%\osquery\osqueryd"
 @REM Copying files for 64 bit OS
 if "%bits32%"=="false" (
     set "ArchSubfolder=x64"
-    set "FilesToCopy=%OsqueryFlagsFilename% %ExtnFilename% %OsqueryManifestFilename% %OsqueryExtnLoadFilename%"
+    set "FilesToCopy=%OsqueryFlagsFilename% %ExtnFilename% %VajraExtnFilename% %OsqueryManifestFilename% %OsqueryExtnLoadFilename%"
 ) else (
     @REM Copying files for 32 bit OS
     set "ArchSubfolder=x86"
-    set "FilesToCopy=%OsqueryFlagsFilename%"
+    set "FilesToCopy=%OsqueryFlagsFilename% %VajraExtnFilename% %OsqueryExtnLoadFilename%"
 )
 @REM Copying common files
 for %%F in (%FilesToCopy%) do (
