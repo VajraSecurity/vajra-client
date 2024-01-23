@@ -1,5 +1,5 @@
+--tls_hostname=getvajra.com:1234
 --config_plugin=tls
-# --config_path=C:\Program Files\osquery\osquery2.conf
 --enable_monitor=false
 --events_expiry=3600
 --events_max=2500
@@ -20,10 +20,9 @@
 --database_dump=false
 --schedule_default_interval=30
 --pack_refresh_interval=30
---extensions_require=plgx_win_extension
+--extensions_require=plgx_win_extension,vajra_win_extension
 --enroll_secret_path=C:\Program Files\osquery\enrollment_secret.txt
 --tls_server_certs=C:\Program Files\osquery\certs\cert.pem
---tls_hostname=getvajra.com:1234
 --host_identifier=uuid
 --disable_distributed=false
 --distributed_plugin=tls
